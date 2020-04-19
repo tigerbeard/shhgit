@@ -60,7 +60,12 @@ func (s *Session) InitGitHubClients() {
 		ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})
 		tc := oauth2.NewClient(s.Context, ts)
 
-		client := github.NewClient(tc)
+		var client *github.Client
+		if len(s.Config.GitHubBaseUrl) > 0 {
+			client, _ = github.NewEnterpriseClient(s.Config.GitHubBaseUrl, s.Config.GitHubUploadUrl, tc)
+		} else {
+			client = github.NewClient(tc)
+		}
 
 		client.UserAgent = fmt.Sprintf("%s v%s", Name, Version)
 		_, _, err := client.Users.Get(s.Context, "")

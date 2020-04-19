@@ -11,6 +11,8 @@ import (
 )
 
 type Config struct {
+	GitHubBaseUrl                string            `yaml:"github_base_url"`
+	GitHubUploadUrl              string            `yaml:"github_upload_url"`
 	GitHubAccessTokens           []string          `yaml:"github_access_tokens"`
 	SlackWebhook                 string            `yaml:"slack_webhook,omitempty"`
 	BlacklistedExtensions        []string          `yaml:"blacklisted_extensions"`
